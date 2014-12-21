@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body>
+<form action="/search" method="get">
+    <input type="text" name="q"/>
+    <input type="submit"/>
+</form>
+
+{{#results}}
+<h2>Results</h2>
+
+<p>Total found: {{total}}</p>
+
+<ol>
+    {{#hits}}
+    <li style="clear: both">
+        <h3>
+            {{#og_url}}
+                <a href="{{.}}">
+            {{/og_url}}
+            {{#og_title}}
+                {{.}}
+            {{/og_title}}
+            {{#og_url}}
+                </a>
+            {{/og_url}}
+        </h3>
+        {{#schema_image}}
+            <img src="{{.}}" height="100" style="float: left; padding-right: 1em; margin-bottom: 2em"/>
+        {{/schema_image}}
+        {{#schema_description}}
+        <p>{{.}}</p>
+        {{/schema_description}}
+    </li>
+    {{/hits}}
+</ol>
+{{/results}}
+
+</body>
+</html>
