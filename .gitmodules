@@ -3,4 +3,4 @@
 	url = https://github.com/avengerpenguin/r2r
 [submodule "shapely"]
 	path = shapely
-	url = https://github.com/avengerpenguin/shapely
+	url = git@github.com:avengerpenguin/shapely.git
