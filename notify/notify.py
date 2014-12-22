@@ -3,7 +3,7 @@ import os
 from flask import Flask, request, render_template
 import requests
 from celery import Celery
-from rdflib import Graph, URIRef, Literal
+from rdflib import Graph, URIRef, Literal, RDFS
 
 
 def make_celery(app):
@@ -42,7 +42,7 @@ def index():
 @celery.task(name='notify.send_content')
 def send_content(uri):
     g = Graph()
-    g.add((URIRef(uri), URIRef('http://schema.org/url'), Literal(uri)))
+    g.add((URIRef(uri), RDFS.type, URIRef('http://schema.org/WebPage')))
     g.parse(uri)
 
     # Send to infer
