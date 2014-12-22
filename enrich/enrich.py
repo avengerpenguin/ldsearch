@@ -46,7 +46,7 @@ def index():
     return 'Accepted!', 202
 
 
-@celery.task()
+@celery.task(name='enrich.enrich.enrich')
 def enrich(graph):
     for enricher in enrichers:
         enricher.enrich(graph)
