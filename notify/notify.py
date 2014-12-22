@@ -42,7 +42,7 @@ def index():
     return 'Accepted!\n', 202, {'Content-Type': 'text/plain'}
 
 
-@celery.task(name='notify.notify.send_content')
+@celery.task(name='notify.send_content')
 def send_content(uri):
     g = Graph()
     g.add((URIRef(uri), RDF.type, URIRef('http://www.bbc.co.uk/search/schema/ContentItem')))
