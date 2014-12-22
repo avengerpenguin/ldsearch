@@ -3,7 +3,7 @@ from flask import Flask, request, render_template
 from elasticsearch import Elasticsearch
 from pyld import jsonld
 import json
-from rdflib import Graph, URIRef, RDFS
+from rdflib import Graph, URIRef, RDF
 
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ def index():
     g = Graph()
     g.parse(data=request_body, format='json-ld')
 
-    for uri in g.subjects(predicate=RDFS.type, object=URIRef('http://schema.org/WebPage')):
+    for uri in g.subjects(predicate=RDF.type, object=URIRef('http://schema.org/WebPage')):
         es.index(index='bbc', body=body, doc_type='item', id=str(uri))
 
     return 'Accepted!', 202
