@@ -41,7 +41,7 @@ def index():
     return 'Accepted!', 202
 
 
-@celery.task(name='infer.task')
+@celery.task(name='infer.infer')
 def infer(graph):
     rule_store, rule_graph, network = SetupRuleStore(makeNetwork=True)
     rules = HornFromN3(os.path.join(
