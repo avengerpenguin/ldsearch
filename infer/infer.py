@@ -32,7 +32,7 @@ def index():
     new_graph = graph + closure_delta
 
     # Send to ingest
-    requests.post('http://localhost:5200/', new_graph.serialize(format='json-ld'))
+    requests.post('http://localhost:5100/', new_graph.serialize(format='json-ld'))
 
     return 'Accepted!', 202
 

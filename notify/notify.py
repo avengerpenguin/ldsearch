@@ -46,7 +46,7 @@ def send_content(uri):
     g.parse(uri)
 
     # Send to infer
-    requests.post('http://localhost:5100/', g.serialize(format='json-ld'))
+    requests.post('http://localhost:5000/', g.serialize(format='json-ld'))
 
 if __name__ == '__main__':
-    app.run(debug=True, port=int(os.getenv('PORT', 5000)))
+    app.run(debug=True, port=int(os.getenv('PORT', 5000)), host='0.0.0.0')
