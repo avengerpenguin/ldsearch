@@ -22,7 +22,6 @@
 { ?x schema:thumbnailUrl ?y } => { ?x bbcsearch:thumbnail ?y } .
 { ?x schema:image        ?y } => { ?x bbcsearch:thumbnail ?y } .
 
-
 { ?x og:url              ?y } => { ?x bbcsearch:url       ?y } .
 { ?x og2:url             ?y } => { ?x bbcsearch:url       ?y } .
 { ?x schema:url          ?y } => { ?x bbcsearch:url       ?y } .

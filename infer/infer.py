@@ -8,11 +8,7 @@ import requests
 
 
 app = Flask(__name__)
-
-
-rule_store, rule_graph, network = SetupRuleStore(makeNetwork=True)
-rules = HornFromN3(os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), 'rules.n3'))
+http = requests.Session()
 
 
 @app.route('/', methods=['POST'])
@@ -20,6 +16,10 @@ def index():
     request_body = request.get_data().decode('utf-8')
     graph = Graph()
     graph.parse(data=request_body, format='json-ld')
+
+    rule_store, rule_graph, network = SetupRuleStore(makeNetwork=True)
+    rules = HornFromN3(os.path.join(
+        os.path.dirname(os.path.realpath(__file__)), 'rules.n3'))
 
     closure_delta = Graph()
     network.inferredFacts = closure_delta
@@ -31,7 +31,7 @@ def index():
     new_graph = graph + closure_delta
 
     # Send to ingest
-    requests.post('http://localhost:5200/', new_graph.serialize(format='json-ld'))
+    http.post('http://localhost:5200/', new_graph.serialize(format='json-ld'))
 
     return 'Accepted!', 202
 

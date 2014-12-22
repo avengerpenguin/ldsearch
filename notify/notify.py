@@ -6,6 +6,9 @@ from celery import Celery
 from rdflib import Graph, URIRef, Literal, RDF
 
 
+http = requests.Session()
+
+
 def make_celery(app):
     celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
     celery.conf.update(app.config)
@@ -46,7 +49,8 @@ def send_content(uri):
     g.parse(uri)
 
     # Send to enrich
-    requests.post('http://localhost:5000/', g.serialize(format='json-ld'))
+    http.post('http://localhost:5000/', g.serialize(format='json-ld'))
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.getenv('PORT', 5000)), host='0.0.0.0')
+

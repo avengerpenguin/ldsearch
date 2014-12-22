@@ -2,12 +2,12 @@ from flask import Flask, request, render_template
 import os
 from rdflib import Graph, Namespace
 import requests
-from enrichers import programmes_rdf
+from enrichers import programmes_rdf, dbpedia_spotlight
+
 
 app = Flask(__name__)
-
-
-enrichers = [programmes_rdf]
+enrichers = [programmes_rdf, dbpedia_spotlight]
+http = requests.Session()
 
 
 @app.route('/', methods=['POST'])
@@ -20,10 +20,11 @@ def index():
         enricher.enrich(graph)
 
     # Send to infer
-    requests.post('http://localhost:5100/', graph.serialize(format='json-ld'))
+    http.post('http://localhost:5100/', graph.serialize(format='json-ld'))
 
     return 'Accepted!', 202
 
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.getenv('PORT', 5000)))
+
