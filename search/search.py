@@ -34,6 +34,7 @@ def search():
         g.bind('og2', 'http://opengraphprotocol.org/schema/')
         g.bind('po', 'http://purl.org/ontology/po/')
         g.bind('dcterms', 'http://purl.org/dc/terms/')
+        g.bind('bbcsearch', 'http://www.bbc.co.uk/search/schema/')
 
         thing = ThingFactory(g)(hit['_id'])
 

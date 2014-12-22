@@ -21,8 +21,8 @@ def make_celery(app):
 
 app = Flask(__name__)
 app.config.update(
-    CELERY_BROKER_URL = 'amqp://guest@localhost:5672//',
-    CELERY_RESULT_BACKEND = 'amqp://guest@localhost:5672//'
+    CELERY_BROKER_URL = 'amqp://guest@' + os.getenv('RABBIT_HOST', 'localhost')+':5672//',
+    CELERY_RESULT_BACKEND = 'amqp://guest@' + os.getenv('RABBIT_HOST', 'localhost')+':5672//'
 )
 celery = make_celery(app)
 
@@ -42,10 +42,10 @@ def index():
 @celery.task(name='notify.send_content')
 def send_content(uri):
     g = Graph()
-    g.add((URIRef(uri), RDF.type, URIRef('http://schema.org/WebPage')))
+    g.add((URIRef(uri), RDF.type, URIRef('http://www.bbc.co.uk/ContentItem')))
     g.parse(uri)
 
-    # Send to infer
+    # Send to enrich
     requests.post('http://localhost:5000/', g.serialize(format='json-ld'))
 
 if __name__ == '__main__':

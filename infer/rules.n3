@@ -7,18 +7,26 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix md: <http://www.w3.org/ns/md#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix bbcsearch: <http://www.bbc.co.uk/search/schema/> .
 
 
-{ ?x rnews:headline      ?y } => { ?x schema:name         ?y } .
-{ ?x og:title            ?y } => { ?x schema:name         ?y } .
+{ ?x rnews:headline      ?y } => { ?x bbcsearch:title     ?y } .
+{ ?x og:title            ?y } => { ?x bbcsearch:title     ?y } .
+{ ?x schema:name         ?y } => { ?x bbcsearch:title     ?y } .
 
-{ ?x rnews:description   ?y } => { ?x schema:description  ?y } .
-{ ?x dcterms:description ?y } => { ?x schema:description  ?y } .
+{ ?x rnews:description   ?y } => { ?x bbcsearch:synopsis  ?y } .
+{ ?x dcterms:description ?y } => { ?x bbcsearch:synopsis  ?y } .
+{ ?x schema:description  ?y } => { ?x bbcsearch:synopsis  ?y } .
 
-{ ?x rnews:thumbnailUrl  ?y } => { ?x schema:thumbnailUrl ?y } .
 
-{ ?x og:url              ?y } => { ?x schema:url          ?y } .
-{ ?x og2:url             ?y } => { ?x schema:url          ?y } .
+{ ?x rnews:thumbnailUrl  ?y } => { ?x bbcsearch:thumbnail ?y } .
+{ ?x schema:thumbnailUrl ?y } => { ?x bbcsearch:thumbnail ?y } .
+{ ?x schema:image        ?y } => { ?x bbcsearch:thumbnail ?y } .
 
-{ ?x md:item ?list . ?list rdf:first ?first . ?first schema:description ?y } => { ?x schema:description ?y } .
-{ ?x md:item ?list . ?list rdf:first ?first . ?first schema:name ?y } => { ?x schema:name ?y } .
+
+{ ?x og:url              ?y } => { ?x bbcsearch:url       ?y } .
+{ ?x og2:url             ?y } => { ?x bbcsearch:url       ?y } .
+{ ?x schema:url          ?y } => { ?x bbcsearch:url       ?y } .
+
+{ ?x md:item ?list . ?list rdf:first ?first . ?first schema:description ?y } => { ?x bbcsearch:synopsis ?y } .
+{ ?x md:item ?list . ?list rdf:first ?first . ?first schema:name ?y } => { ?x bbcsearch:title ?y } .

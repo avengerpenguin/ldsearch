@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <link ref="stylesheet" href="/static/semantic.css"/>
+</head>
 <body>
-<form action="/search" method="get">
+<form action="/search" method="get" class="ui">
     <input type="text" name="q"/>
-    <input type="submit"/>
+    <input type="submit" class="ui"/>
 </form>
 
 {{#results}}
@@ -11,19 +14,19 @@
 
 <p>Total found: {{total}}</p>
 
-<ol>
+<ol class="ui list">
     {{#hits}}
     <li style="clear: both">
-        <h3><a href="{{schema_url.any}}">{{schema_name.any}}</a></h3>
-        {{#schema_image}}
+        <h3><a href="{{bbcsearch_url.any}}">{{bbcsearch_title.any}}</a></h3>
+        {{#bbcsearch_thumbnail}}
             <img src="{{.}}" height="100" style="float: left; padding-right: 1em; margin-bottom: 2em"/>
-        {{/schema_image}}
-        {{#schema_description}}
+        {{/bbcsearch_thumbnail}}
+        {{#bbcsearch_synopsis}}
         <p>{{.}}</p>
-        {{/schema_description}}
+        {{/bbcsearch_synopsis}}
 
-        <p>URI: {{schema_url.any}}</p>
-        <p>Graph: <a href="/graph?uri={{schema_url.any}}">Graph</a></p>
+        <p>URI: {{bbcsearch_url.any}}</p>
+        <p>Graph: <a href="/graph?uri={{bbcsearch_url.any}}">Graph</a></p>
     </li>
     {{/hits}}
 </ol>
