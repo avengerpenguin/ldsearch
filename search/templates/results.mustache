@@ -15,15 +15,15 @@
     {{#hits}}
     <li style="clear: both">
         <h3>
-            {{#og_url}}
+            {{#schema_url}}
                 <a href="{{.}}">
-            {{/og_url}}
-            {{#og_title}}
+            {{/schema_url}}
+            {{#schema_name}}
                 {{.}}
-            {{/og_title}}
-            {{#og_url}}
+            {{/schema_name}}
+            {{#schema_url}}
                 </a>
-            {{/og_url}}
+            {{/schema_url}}
         </h3>
         {{#schema_image}}
             <img src="{{.}}" height="100" style="float: left; padding-right: 1em; margin-bottom: 2em"/>
@@ -31,6 +31,11 @@
         {{#schema_description}}
         <p>{{.}}</p>
         {{/schema_description}}
+        {{#schema_url}}
+            <p>URI: {{.}}</p>
+            <p>Graph: <a href="/graph?uri={{.}}">Graph</a></p>
+        {{/schema_url}}
+        </ul>
     </li>
     {{/hits}}
 </ol>

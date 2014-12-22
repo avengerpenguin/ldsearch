@@ -19,7 +19,7 @@ def index():
     g = Graph()
     g.parse(data=request_body, format='json-ld')
 
-    for identifier in g.objects(subject=None, predicate=URIRef('http://purl.org/dc/terms/identifier')):
+    for identifier in g.objects(subject=None, predicate=URIRef('http://schema.org/url')):
         es.index(index='bbc', body=body, doc_type='item', id=identifier)
 
     return 'Accepted!', 202

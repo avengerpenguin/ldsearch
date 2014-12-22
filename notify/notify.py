@@ -21,14 +21,15 @@ def make_celery(app):
 
 app = Flask(__name__)
 app.config.update(
-    CELERY_BROKER_URL = 'amqp://guest@localhost:5672//',
-    CELERY_RESULT_BACKEND = 'amqp://guest@localhost:5672//'
+    CELERY_BROKER_URL = 'amqp://guest@192.168.59.103:5672//',
+    CELERY_RESULT_BACKEND = 'amqp://guest@192.168.59.103:5672//'
 )
 celery = make_celery(app)
 
+
 @app.route('/', methods=['POST'])
 def index():
-    uris = [line
+    uris = [line.strip() # trim any whitespace
             for line in request.get_data().decode('utf-8').splitlines()
             if not line.startswith('#')]
 
@@ -41,11 +42,11 @@ def index():
 @celery.task(name='notify.send_content')
 def send_content(uri):
     g = Graph()
-    g.add((URIRef(uri), URIRef('http://purl.org/dc/terms/identifier'), Literal(uri)))
+    g.add((URIRef(uri), URIRef('http://schema.org/url'), Literal(uri)))
     g.parse(uri)
-    requests.post('http://localhost:5200/', g.serialize(format='json-ld'))
-    print(uri)
 
+    # Send to infer
+    requests.post('http://localhost:5100/', g.serialize(format='json-ld'))
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.getenv('PORT', 5000)))

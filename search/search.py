@@ -4,7 +4,10 @@ from flask_stache import render_view, render_template
 from laconia import ThingFactory
 from elasticsearch import Elasticsearch
 from rdflib import Graph
+from rdflib.tools.rdf2dot import rdf2dot
 import json
+from io import StringIO, BytesIO
+from pydot import graph_from_dot_data
 
 
 app = Flask(__name__)
@@ -28,6 +31,9 @@ def search():
         g.parse(data=json.dumps(hit['_source']['jsonld']), format='json-ld')
         g.bind('og', 'http://ogp.me/ns#')
         g.bind('schema', 'http://schema.org/')
+        g.bind('og2', 'http://opengraphprotocol.org/schema/')
+        g.bind('po', 'http://purl.org/ontology/po/')
+        g.bind('dcterms', 'http://purl.org/dc/terms/')
 
         thing = ThingFactory(g)(hit['_id'])
 
@@ -39,6 +45,22 @@ def search():
     }
 
     return render_template('results', results=results)
+
+@app.route('/graph')
+def graph():
+    out = StringIO()
+    uri = request.args.get('uri')
+
+    g = Graph()
+    g.parse(data=json.dumps(es.get(index='bbc', doc_type='item', id=uri)['_source']['jsonld']), format='json-ld')
+
+    rdf2dot(g, out)
+
+    dot_graph = graph_from_dot_data(out.getvalue())
+
+    return dot_graph.create(format='png'), 200, {'Content-Type': 'image/png'}
+
+
 
 
 if __name__ == '__main__':
