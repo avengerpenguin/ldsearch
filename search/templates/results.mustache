@@ -14,28 +14,16 @@
 <ol>
     {{#hits}}
     <li style="clear: both">
-        <h3>
-            {{#schema_url}}
-                <a href="{{.}}">
-            {{/schema_url}}
-            {{#schema_name}}
-                {{.}}
-            {{/schema_name}}
-            {{#schema_url}}
-                </a>
-            {{/schema_url}}
-        </h3>
+        <h3><a href="{{schema_url.any}}">{{schema_name.any}}</a></h3>
         {{#schema_image}}
             <img src="{{.}}" height="100" style="float: left; padding-right: 1em; margin-bottom: 2em"/>
         {{/schema_image}}
         {{#schema_description}}
         <p>{{.}}</p>
         {{/schema_description}}
-        {{#schema_url}}
-            <p>URI: {{.}}</p>
-            <p>Graph: <a href="/graph?uri={{.}}">Graph</a></p>
-        {{/schema_url}}
-        </ul>
+
+        <p>URI: {{schema_url.any}}</p>
+        <p>Graph: <a href="/graph?uri={{schema_url.any}}">Graph</a></p>
     </li>
     {{/hits}}
 </ol>
