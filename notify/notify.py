@@ -21,8 +21,8 @@ def make_celery(app):
 
 app = Flask(__name__)
 app.config.update(
-    CELERY_BROKER_URL = 'amqp://guest@192.168.59.103:5672//',
-    CELERY_RESULT_BACKEND = 'amqp://guest@192.168.59.103:5672//'
+    CELERY_BROKER_URL = 'amqp://guest@localhost:5672//',
+    CELERY_RESULT_BACKEND = 'amqp://guest@localhost:5672//'
 )
 celery = make_celery(app)
 
