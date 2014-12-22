@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link ref="stylesheet" href="/static/semantic.css"/>
+    <link rel="stylesheet" href="/static/semantic.css"/>
+    <link rel="stylesheet" href="/static/style.css"/>
 </head>
 <body>
 <form action="/search" method="get" class="ui">
@@ -24,6 +25,10 @@
         {{#bbcsearch_synopsis}}
         <p>{{.}}</p>
         {{/bbcsearch_synopsis}}
+
+        {{#bbcsearch_nextOn}}
+            <p>On TV: {{.}}</p>
+        {{/bbcsearch_nextOn}}
 
         <p>URI: {{bbcsearch_url.any}}</p>
         <p>Graph: <a href="/graph?uri={{bbcsearch_url.any}}">Graph</a></p>

@@ -19,7 +19,7 @@ def index():
     g = Graph()
     g.parse(data=request_body, format='json-ld')
 
-    for uri in g.subjects(predicate=RDF.type, object=URIRef('http://www.bbc.co.uk/ContentItem')):
+    for uri in g.subjects(predicate=RDF.type, object=URIRef('http://www.bbc.co.uk/search/schema/ContentItem')):
         es.index(index='bbc', body=body, doc_type='item', id=str(uri))
 
     return 'Accepted!', 202

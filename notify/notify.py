@@ -42,7 +42,7 @@ def index():
 @celery.task(name='notify.send_content')
 def send_content(uri):
     g = Graph()
-    g.add((URIRef(uri), RDF.type, URIRef('http://www.bbc.co.uk/ContentItem')))
+    g.add((URIRef(uri), RDF.type, URIRef('http://www.bbc.co.uk/search/schema/ContentItem')))
     g.parse(uri)
 
     # Send to enrich

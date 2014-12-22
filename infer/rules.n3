@@ -9,7 +9,6 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix bbcsearch: <http://www.bbc.co.uk/search/schema/> .
 
-
 { ?x rnews:headline      ?y } => { ?x bbcsearch:title     ?y } .
 { ?x og:title            ?y } => { ?x bbcsearch:title     ?y } .
 { ?x schema:name         ?y } => { ?x bbcsearch:title     ?y } .
@@ -30,3 +29,13 @@
 
 { ?x md:item ?list . ?list rdf:first ?first . ?first schema:description ?y } => { ?x bbcsearch:synopsis ?y } .
 { ?x md:item ?list . ?list rdf:first ?first . ?first schema:name ?y } => { ?x bbcsearch:title ?y } .
+
+{
+  ?page a schema:Series .
+  ?page foaf:primaryTopic ?brand .
+  ?brand po:episode ?episode .
+  ?page2 foaf:primaryTopic ?episode .
+  ?page2 schema:publication ?pub .
+  ?pub a schema:BroadcastEvent .
+  ?pub schema:startDate ?start
+} => { ?page bbcsearch:nextOn ?start } .

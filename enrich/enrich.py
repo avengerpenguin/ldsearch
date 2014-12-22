@@ -25,6 +25,5 @@ def index():
     return 'Accepted!', 202
 
 
-
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.getenv('PORT', 5000)))
