@@ -2,7 +2,10 @@ from flask import Flask, request, render_template
 import os
 from rdflib import Graph, Namespace
 import requests
-from enrichers import programmes_rdf, dbpedia_spotlight
+try:
+    from enrichers import programmes_rdf, dbpedia_spotlight
+except ImportError:
+    from enrich.enrichers import programmes_rdf, dbpedia_spotlight
 from celery import Celery
 
 
@@ -24,6 +27,7 @@ app.config.update(
     CELERY_BROKER_URL = 'amqp://guest@' + os.getenv('RABBIT_HOST', 'localhost')+':5672//',
     CELERY_RESULT_BACKEND = 'amqp://guest@' + os.getenv('RABBIT_HOST', 'localhost')+':5672//'
 )
+app.import_name = '.'
 celery = make_celery(app)
 
 
